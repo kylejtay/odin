@@ -1,0 +1,47 @@
+<div class="px-6">
+  <div class="bg-white shadow overflow-hidden  sm:rounded-lg">
+    <div class="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
+      <div class="-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-no-wrap">
+        <div class="ml-4 mt-2">
+          <h3 class="text-lg leading-6 font-medium text-gray-900">
+            <%= @project.title %>
+          </h3>
+        </div>
+        <div class="ml-4 mt-2 flex-shrink-0">
+          <%= link_to 'Delete Project', project_path(@project), method: :delete, data: { confirm: "Are you sure you want to delete #{@project.title}?" } %>
+          <span class="inline-flex rounded-md shadow-sm">
+            <%= link_to 'Edit Project', edit_project_path(@project), class: 'relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700' %>
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="px-4 py-5 sm:px-6">
+      <dl class="grid grid-cols-1 col-gap-4 row-gap-8 sm:grid-cols-2">
+        <div class="sm:col-span-1">
+          <dt class="text-sm leading-5 font-medium text-gray-500">
+            Assigned Users
+          </dt>
+          <dd class="mt-1 text-sm leading-5 text-gray-900">
+            <%= @project.users.map(&:full_name).join(', ') %>
+          </dd>
+        </div>
+        <div class="sm:col-span-2">
+          <dt class="text-sm leading-5 font-medium text-gray-500">
+            Project Description
+          </dt>
+          <dd class="mt-1 text-sm leading-5 text-gray-900">
+            <%= @project.description %>
+          </dd>
+        </div>
+        <div class="sm:col-span-2">
+          <dt class="text-sm leading-5 font-medium text-gray-500">
+            Progress
+          </dt>
+          <dd class="mt-4 text-sm leading-5 text-gray-900 rounded-md border border-gray-100 h-64 flex items-center justify-center">
+            Project Related Graphs and Charts Here
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</div>

@@ -8,4 +8,8 @@ Rails.application.routes.draw do
   get 'static/index'
   root 'static#index'
   get 'dashboard' => 'dashboard#index'
+  resources :projects
+  resources :institutions do
+    resources :users
+  end
 end

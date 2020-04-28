@@ -4,6 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   belongs_to :company
+  has_and_belongs_to_many :projects
 
   def full_name
     first_name + " " + last_name
