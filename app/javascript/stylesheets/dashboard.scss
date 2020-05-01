@@ -1,0 +1,11 @@
+.sidebar nav {
+  a {
+    &.reports { background-image: url('../images/icons/report.svg'); }
+  }
+}
+
+button, a {
+  .fa {
+    margin-right: 10px;
+  }
+}

@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   belongs_to :company
   has_and_belongs_to_many :projects
+  has_many :time_estimates
 
   def full_name
     first_name + " " + last_name

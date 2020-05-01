@@ -1,0 +1,6 @@
+<%
+  value = 0
+  query = time_estimates.where('start_time BETWEEN ? AND ?', start_time, start_time + 1.day).where(project_id: project_id).first
+  value = query.hours if query.present?
+%>
+<input name="time_estimates[<%= project_id %>][<%= start_time %>][hours][]" class="form-input block w-full text-xs sm:leading-5" placeholder="HH:mm" value="<%= value %>" />

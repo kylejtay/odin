@@ -15,5 +15,6 @@ class Ability
 
   def add_user_abilities(user)
     can :crud, Project
+    can :crud, TimeEstimate
   end
 end

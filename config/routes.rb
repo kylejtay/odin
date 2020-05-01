@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   root 'static#index'
   get 'dashboard' => 'dashboard#index'
   resources :projects
+  resources :time_estimates
   resources :institutions do
     resources :users
   end
