@@ -1,17 +1,38 @@
-<h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate">
-  <a href="/time_estimates?start_time=<%= @start_time - 7.days %>" style="margin-right: -10px;" type="button" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150">
-    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-      <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
-    </svg>
-  </a>
-  <a href="/time_estimates?start_time=<%= @start_time + 7.days %>" type="button" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150">
-    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-      <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-    </svg>
-  </a>
-  <%= @start_time.strftime('%-d %b -') %> <%= (@start_time + 6.days).strftime('%-d %b %Y') %>
-</h1>
-<%= form_with scope: :time_estimates, url: time_estimates_path  do |form| %>
+<% content_for :body_class, "forcasting" %>
+<div class="flex justify-between">
+  <div>
+    <a href="/time_estimates?start_time=<%= @start_time - 7.days %>" style="margin-right: -10px;" type="button" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150">
+      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"/>
+      </svg>
+    </a>
+    <a href="/time_estimates?start_time=<%= @start_time + 7.days %>" type="button" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-500 hover:text-gray-400 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150">
+      <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+      </svg>
+    </a>
+    <h1 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:leading-9 sm:truncate inline ml-2">
+      <%= @start_time.strftime('%-d %b -') %> <%= (@start_time + 6.days).strftime('%-d %b %Y') %>
+    </h1>
+  </div>
+  <div>
+    <span class="relative z-0 inline-flex shadow-sm">
+      <a href="/time_estimates?start_time=<%= @start_time %>&period=7" class="relative inline-flex items-center px-4 py-2 rounded-l-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+        Week
+      </a>
+      <a href="/time_estimates?start_time=<%= @start_time %>&period=14" class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+        2-Week
+      </a>
+      <a href="/time_estimates?start_time=<%= @start_time %>&period=30" class="-ml-px relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+        Month
+      </a>
+      <a href="/time_estimates?start_time=<%= @start_time %>&period=90" class="-ml-px relative inline-flex items-center px-4 py-2 rounded-r-md border border-gray-300 bg-white text-sm leading-5 font-medium text-gray-700 hover:text-gray-500 focus:z-10 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150">
+        3-Month
+      </a>
+    </span>
+  </div>
+</div>
+<%= form_with scope: :time_estimates, url: time_estimates_path, local: true  do |form| %>
   <div class="flex flex-col mt-6">
     <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
       <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
@@ -20,10 +41,9 @@
             <tr>
               <th class="px-4 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
               </th>
-              <% 7.times do |i| %>
+              <% @period.times do |i| %>
                 <th class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                  <span class="text-base"><%= (@start_time + i.day).strftime('%^a') %></span><br>
-                  <span class="text-xs"><%= (@start_time + i.day).strftime('%d %b') %></span>
+                  <span class="text-xs"><%= (@start_time + i.day).strftime('%-m/%-d') %></span>
                 </th>
               <% end %>
               <th class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
@@ -32,22 +52,29 @@
             </tr>
           </thead>
           <tbody class="bg-white">
-            <% current_user.projects.each do |project| %>
+            <% @users.each do |user| %>
               <tr>
-                <td class="px-4 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-xl text-gray-900 w-xs truncate">
-                  <%= project.title %>
-                </td>
-                <% 7.times do |i| %>
-                  <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                    <div class="relative rounded-md shadow-sm">
-                      <%= render partial: "time_estimate", locals: {project_id: project.id, start_time: @start_time + i.days, offset: i, time_estimates: @time_estimates } %>
-                    </div>
-                  </td>
-                <% end %>
-                <td class="px-2 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500 text-right">
-                  0
+                <td class="px-2 py-2 border-b border-gray-200 bg-gray-100 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider" colspan="<%= @period + 2 %>">
+                  <%= user.full_name %>
                 </td>
               </tr>
+              <% user.projects.each do |project| %>
+                <tr>
+                  <td class="px-4 py-2 whitespace-no-wrap border-b border-gray-200 text-sm text-md text-gray-900 truncate">
+                    <%= project.title %>
+                  </td>
+                  <% @period.times do |i| %>
+                    <td class="px-1 py-1 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500" width="50">
+                      <div class="relative rounded-sm shadow-sm">
+                        <%= render partial: "time_estimate", locals: { project_id: project.id, start_time: @start_time + i.days, offset: i, time_estimates: user.time_estimates.select{ |te| te.project_id == project.id }, user: user} %>
+                      </div>
+                    </td>
+                  <% end %>
+                  <td class="px-4 py-2 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500 text-right"  width="100">
+                    0
+                  </td>
+                </tr>
+              <% end %>
             <% end %>
           </tbody>
           <tfoot>
@@ -55,14 +82,10 @@
               <td class="px-4 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                 <%= form.submit 'Save Estimates', class: 'inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition ease-in-out duration-150' %>
               </td>
-              <td class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider text-right">0</td>
-              <td class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider text-right">0</td>
-              <td class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider text-right">0</td>
-              <td class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider text-right">0</td>
-              <td class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider text-right">0</td>
-              <td class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider text-right">0</td>
-              <td class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider text-right">0</td>
-              <td class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider text-right">0</td>
+              <% @period.times do |i| %>
+                <td class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider text-center">0</td>
+              <% end %>
+              <td class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider text-center">0</td>
             </tr>
           </tfoot>
         </table>

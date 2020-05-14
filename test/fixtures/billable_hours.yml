@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_time: 2020-05-14 09:04:24
+  end_time: 2020-05-14 09:04:24
+  user: one
+  project: one
+  hours: 9.99
+
+two:
+  start_time: 2020-05-14 09:04:24
+  end_time: 2020-05-14 09:04:24
+  user: two
+  project: two
+  hours: 9.99

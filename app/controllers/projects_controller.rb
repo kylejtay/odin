@@ -15,8 +15,12 @@ class ProjectsController < ApplicationController
 
   def create
     @project = Project.new(project_params)
-    @project.save
-    redirect_to projects_path
+    @project.company_id = current_user.company_id
+    if @project.save
+      redirect_to projects_path
+    else
+      render 'new'
+    end
   end
 
   def edit

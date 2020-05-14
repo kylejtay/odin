@@ -13,6 +13,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     company = Company.create(name: params[:user][:company])
     super do
+      resource.admin = true
       resource.company_id = company.id
       resource.save
     end

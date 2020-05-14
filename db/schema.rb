@@ -10,15 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_30_161452) do
+ActiveRecord::Schema.define(version: 2020_05_14_160901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "billable_hours", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
+    t.decimal "hours", precision: 10, scale: 3
+    t.decimal "decimal", precision: 10, scale: 3
+    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
+    t.index ["project_id"], name: "index_billable_hours_on_project_id"
+    t.index ["start_time", "user_id", "project_id"], name: "index_billable_hours_on_start_time_and_user_id_and_project_id", unique: true
+    t.index ["user_id"], name: "index_billable_hours_on_user_id"
+  end
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.jsonb "default_permissions", default: {}
   end
 
   create_table "projects", force: :cascade do |t|
@@ -26,6 +41,8 @@ ActiveRecord::Schema.define(version: 2020_04_30_161452) do
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "company_id", null: false
+    t.index ["company_id"], name: "index_projects_on_company_id"
   end
 
   create_table "projects_users", id: false, force: :cascade do |t|
@@ -42,7 +59,7 @@ ActiveRecord::Schema.define(version: 2020_04_30_161452) do
     t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
-    t.decimal "hours"
+    t.decimal "hours", precision: 10, scale: 3
     t.index ["project_id"], name: "index_time_estimates_on_project_id"
     t.index ["start_time", "user_id", "project_id"], name: "index_time_estimates_on_start_time_and_user_id_and_project_id", unique: true
     t.index ["user_id"], name: "index_time_estimates_on_user_id"
@@ -59,11 +76,28 @@ ActiveRecord::Schema.define(version: 2020_04_30_161452) do
     t.string "first_name"
     t.string "last_name"
     t.bigint "company_id", null: false
+    t.boolean "admin", default: false
+    t.jsonb "permissions", default: {}
+    t.string "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer "invitation_limit"
+    t.string "invited_by_type"
+    t.bigint "invited_by_id"
+    t.integer "invitations_count", default: 0
     t.index ["company_id"], name: "index_users_on_company_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["invitation_token"], name: "index_users_on_invitation_token", unique: true
+    t.index ["invitations_count"], name: "index_users_on_invitations_count"
+    t.index ["invited_by_id"], name: "index_users_on_invited_by_id"
+    t.index ["invited_by_type", "invited_by_id"], name: "index_users_on_invited_by_type_and_invited_by_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "billable_hours", "projects"
+  add_foreign_key "billable_hours", "users"
+  add_foreign_key "projects", "companies"
   add_foreign_key "time_estimates", "projects"
   add_foreign_key "time_estimates", "users"
   add_foreign_key "users", "companies"
