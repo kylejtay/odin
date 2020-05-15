@@ -1,6 +1,6 @@
 class Project < ApplicationRecord
-  belongs_to :companyh
-  has_many :billable_hours
+  belongs_to :company
+  has_many :time_entries
   has_many :tasks
   has_many :users, -> { distinct }, through: :tasks
   has_many :time_estimates, -> { distinct }, through: :tasks
@@ -9,7 +9,7 @@ class Project < ApplicationRecord
 
   def billed_hours
     hours = 0
-    billed_hours = billable_hours.where('start_time <= ?', Time.now.beginning_of_day)
+    billed_hours = time_entries.where('start_time <= ?', Time.now.beginning_of_day)
     billed_hours.each do |billed|
       hours += billed.hours
     end

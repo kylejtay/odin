@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   belongs_to :company
   has_many :time_estimates
-  has_many :billable_hours
+  has_many :time_entries
   has_and_belongs_to_many :tasks
   has_many :projects, -> { distinct }, through: :tasks
 
@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
   def billed_hours
     hours = 0
-    billed_hours = billable_hours.where('start_time <= ?', Time.now.beginning_of_day)
+    billed_hours = time_entries.where('start_time <= ?', Time.now.beginning_of_day)
     billed_hours.each do |billed|
       hours += billed.hours
     end

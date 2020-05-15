@@ -10,24 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_15_215027) do
+ActiveRecord::Schema.define(version: 2020_05_15_221835) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "billable_hours", force: :cascade do |t|
-    t.datetime "start_time"
-    t.datetime "end_time"
-    t.bigint "user_id", null: false
-    t.bigint "project_id", null: false
-    t.decimal "hours", precision: 10, scale: 3
-    t.decimal "decimal", precision: 10, scale: 3
-    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
-    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
-    t.index ["project_id"], name: "index_billable_hours_on_project_id"
-    t.index ["start_time", "user_id", "project_id"], name: "index_billable_hours_on_start_time_and_user_id_and_project_id", unique: true
-    t.index ["user_id"], name: "index_billable_hours_on_user_id"
-  end
 
   create_table "companies", force: :cascade do |t|
     t.string "name"
@@ -68,6 +54,20 @@ ActiveRecord::Schema.define(version: 2020_05_15_215027) do
     t.bigint "user_id"
     t.index ["task_id"], name: "index_tasks_users_on_task_id"
     t.index ["user_id"], name: "index_tasks_users_on_user_id"
+  end
+
+  create_table "time_entries", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.bigint "user_id", null: false
+    t.bigint "project_id", null: false
+    t.decimal "hours", precision: 10, scale: 3
+    t.decimal "decimal", precision: 10, scale: 3
+    t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
+    t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
+    t.index ["project_id"], name: "index_time_entries_on_project_id"
+    t.index ["start_time", "user_id", "project_id"], name: "index_time_entries_on_start_time_and_user_id_and_project_id", unique: true
+    t.index ["user_id"], name: "index_time_entries_on_user_id"
   end
 
   create_table "time_estimates", force: :cascade do |t|
@@ -113,10 +113,10 @@ ActiveRecord::Schema.define(version: 2020_05_15_215027) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "billable_hours", "projects"
-  add_foreign_key "billable_hours", "users"
   add_foreign_key "projects", "companies"
   add_foreign_key "tasks", "projects"
+  add_foreign_key "time_entries", "projects"
+  add_foreign_key "time_entries", "users"
   add_foreign_key "time_estimates", "users"
   add_foreign_key "users", "companies"
 end

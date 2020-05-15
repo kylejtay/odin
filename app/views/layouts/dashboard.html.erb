@@ -37,7 +37,7 @@
                   <%= active_link_to("Dashboard", dashboard_path, wrap_tag: 'li', class: 'dashboard', active: :inclusive) %>
                 <% end %>
                 <%= active_link_to("Time Forecasting", time_estimates_path, wrap_tag: 'li', class: 'forcasting', active: :inclusive) %>
-                <%= active_link_to("Billable Hours", billable_hours_path, wrap_tag: 'li', class: 'forcasting', active: :inclusive) %>
+                <%= active_link_to("Time Entries", time_entries_path, wrap_tag: 'li', class: 'forcasting', active: :inclusive) %>
                 <% if can? :read, Project %>
                   <%= active_link_to("Projects", projects_path, wrap_tag: 'li', class: 'projects', active: :inclusive) %>
                 <% end %>
@@ -66,7 +66,7 @@
                 <%= active_link_to("Dashboard", dashboard_path, wrap_tag: 'li', class: 'dashboard', active: :inclusive) %>
               <% end %>
               <%= active_link_to("Time Forecasting", time_estimates_path, wrap_tag: 'li', class: 'forcasting', active: :inclusive) %>
-              <%= active_link_to("Billable Hours", billable_hours_path, wrap_tag: 'li', class: 'forcasting', active: :inclusive) %>
+              <%= active_link_to("Time Entries", time_entries_path, wrap_tag: 'li', class: 'forcasting', active: :inclusive) %>
               <% if can? :read, Project %>
                 <%= active_link_to("Projects", projects_path, wrap_tag: 'li', class: 'projects', active: :inclusive) %>
               <% end %>

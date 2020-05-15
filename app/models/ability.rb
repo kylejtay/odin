@@ -22,7 +22,7 @@ class Ability
     can :read, User, company_id: user.company_id if user['permissions'][0]['team'].to_i > 0
     can %i[create update destroy], User, company_id: user.company_id if user['permissions'][0]['team'].to_i > 1
     can :read, TimeEstimate, company_id: user.company_id
-    can :read, BillableHour, company_id: user.company_id
+    can :read, TimeEntry, company_id: user.company_id
   end
 
   def add_admin_abilities(user)
@@ -32,6 +32,6 @@ class Ability
     can :crud, Project, company_id: user.company_id
     can :crud, User, company_id: user.company_id
     can :crud, TimeEstimate, company_id: user.company_id
-    can :crud, BillableHour, company_id: user.company_id
+    can :crud, TimeEntry, company_id: user.company_id
   end
 end

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get 'dashboard' => 'dashboard#index'
   resources :projects
   resources :time_estimates
-  resources :billable_hours
+  resources :time_entries
   resources :companies do
     resources :users
   end
