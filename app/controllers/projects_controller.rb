@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @projects = Project.all.order('title ASC')
+    @projects = Project.accessible_by(current_ability)
   end
 
   def show

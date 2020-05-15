@@ -14,16 +14,23 @@ class Ability
   private
 
   def add_user_abilities(user)
-    can :read, Project, company_id: user.company_id
+    can :view, :dashboard if user['permissions'][0]['dashboard'].to_i > 0
+    can :read, :other_forecasts if user['permissions'][0]['forecasting'].to_i > 0
+    can :edit, :other_forecasts if user['permissions'][0]['forecasting'].to_i > 1
+    can :read, Project, company_id: user.company_id if user['permissions'][0]['projects'].to_i > 0
+    can :crud, Project, company_id: user.company_id if user['permissions'][0]['projects'].to_i > 1
+    can :read, User, company_id: user.company_id if user['permissions'][0]['team'].to_i > 0
+    can %i[create update destroy], User, company_id: user.company_id if user['permissions'][0]['team'].to_i > 1
     can :read, TimeEstimate, company_id: user.company_id
     can :read, BillableHour, company_id: user.company_id
   end
 
   def add_admin_abilities(user)
-    can :create, Project
-    can %i[read update destroy], Project, company_id: user.company_id
-    can :create, User
-    can %i[read update destroy], User, company_id: user.company_id
+    can :view, :dashboard
+    can :read, :other_forecasts
+    can :edit, :other_forecasts
+    can :crud, Project, company_id: user.company_id
+    can :crud, User, company_id: user.company_id
     can :crud, TimeEstimate, company_id: user.company_id
     can :crud, BillableHour, company_id: user.company_id
   end

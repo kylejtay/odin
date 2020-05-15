@@ -10,7 +10,11 @@ class TimeEstimatesController < ApplicationController
                   end
     @period = 7
     @period = params['period'].to_i if params['period'].present?
-    @users = current_user.company.users.includes(:projects, :time_estimates)
+    if can? :read, :other_forecasts
+      @users = current_user.company.users.includes(:projects, :time_estimates)
+    else
+      @users = User.where(id: current_user.id).includes(:projects, :time_estimates)
+    end
   end
 
   def show
