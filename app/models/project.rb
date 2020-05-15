@@ -1,8 +1,11 @@
 class Project < ApplicationRecord
-  belongs_to :company
-  has_and_belongs_to_many :users
-  has_many :time_estimates
+  belongs_to :companyh
   has_many :billable_hours
+  has_many :tasks
+  has_many :users, -> { distinct }, through: :tasks
+  has_many :time_estimates, -> { distinct }, through: :tasks
+  enum billing_type: [:fixed, :time_and_materials]
+  accepts_nested_attributes_for :tasks, allow_destroy: true
 
   def billed_hours
     hours = 0

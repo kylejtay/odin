@@ -15,6 +15,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     super do
       resource.admin = true
       resource.company_id = company.id
+      resource.permissions = [{"team"=>"0", "projects"=>"0", "dashboard"=>"0", "forecasting"=>"0"}]
       resource.save
     end
   end

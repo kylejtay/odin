@@ -11,9 +11,9 @@ class TimeEstimatesController < ApplicationController
     @period = 7
     @period = params['period'].to_i if params['period'].present?
     if can? :read, :other_forecasts
-      @users = current_user.company.users.includes(:projects, :time_estimates)
+      @users = current_user.company.users.includes(:projects, :tasks, :time_estimates)
     else
-      @users = User.where(id: current_user.id).includes(:projects, :time_estimates)
+      @users = User.where(id: current_user.id).includes(:projects, :tasks, :time_estimates)
     end
   end
 
@@ -27,14 +27,14 @@ class TimeEstimatesController < ApplicationController
     params[:time_estimates].each do |time_estimate|
       user_id = time_estimate[0].to_i;
       time_estimate[1].each do |project|
-        project_id = project[0].to_i
+        task_id = project[0].to_i
         project[1].each do |date|
           datetime = Date.parse(date[0])
           date[1].each do |hours|
             length = hours[1][0].to_f
             TimeEstimate.upsert(
-              { start_time: datetime, end_time: datetime + length.hours, hours: length, user_id: user_id, project_id: project_id },
-            unique_by: %i[ start_time user_id project_id ])
+              { start_time: datetime, end_time: datetime + length.hours, hours: length, user_id: user_id, task_id: task_id },
+            unique_by: %i[ start_time user_id task_id ])
           end
         end
       end

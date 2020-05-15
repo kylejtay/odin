@@ -16,13 +16,56 @@
                 </div>
               </div>
 
-              <div class="mt-6">
-                <label for="country" class="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
-                  Users On Project
+              <div class="mt-6 p-4 bg-gray-50">
+                <label class="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
+                  Hour Tracking Categories
+                </label>
+                <%= form.fields_for :tasks do |task| %>
+                  <div class="grid grid-cols-6 gap-4 mt-4">
+                    <div class="col-span-1">
+                      <label class="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
+                        Billable?
+                      </label>
+                      <%= task.select :billable, [['Billable', true], ['Non-Billable', false]], {}, { class: 'block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5' } %>
+                    </div>
+                    <div class="col-span-2">
+                      <label class="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
+                        Name
+                      </label>
+                      <%= task.text_field :title, autofocus: true, class: "form-input rounded-md flex-1 block w-full rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm sm:leading-5", placeholder: "Enter Project Name"  %>
+                    </div>
+                    <div class="sm:col-span-3">
+                      <label class="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
+                        Users
+                      </label>
+                      <div class="mt-1 sm:mt-0">
+                        <div class="rounded-md shadow-sm">
+                          <%= task.collection_select(:user_ids, current_user.company.users, :id, :full_name, {prompt: false}, {multiple: true, class: 'chosen chosen-select block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5', id: 'project_user_ids', data: {placeholder: 'Select User(s)'}}) %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+
+              <div class="mt-2">
+                <label class="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
+                  Billing Type
                 </label>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                   <div class="max-w-xs rounded-md shadow-sm">
-                    <%= form.collection_select(:user_ids, current_user.company.users, :id, :full_name, {prompt: false}, {multiple: true, class: 'chosen chosen-select block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5', id: 'project_user_ids', data: {placeholder: 'Select User(s)'}}) %>
+                    <%= form.select :billing_type, [['Fixed Price', 'fixed'], ['Time & Materials', 'time_and_materials']], { selected: @projects_permission }, { class: 'block form-select w-full transition duration-150 ease-in-out sm:text-sm sm:leading-5' } %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6">
+                <label class="block text-sm font-medium leading-5 text-gray-700 sm:mt-px sm:pt-2">
+                  Budget (Hours)
+                </label>
+                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                  <div class="max-w-xs rounded-md shadow-sm">
+                    <%= form.number_field :hours_budget, autofocus: true, class: "form-input rounded-md flex-1 block w-full rounded-none rounded-r-md transition duration-150 ease-in-out sm:text-sm sm:leading-5", placeholder: "Enter Budgeted Hours"  %>
                   </div>
                 </div>
               </div>
@@ -39,7 +82,7 @@
             <div class="px-4 py-3 bg-gray-50 text-left sm:px-6">
               <span class="inline-flex rounded-md shadow-sm">
                 <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-red-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition duration-150 ease-in-out">
-                  Create Project
+                  <%= button_text %>
                 </button>
               </span>
               <span class="inline-flex rounded-md shadow-sm">

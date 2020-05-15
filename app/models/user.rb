@@ -4,9 +4,11 @@ class User < ApplicationRecord
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   belongs_to :company
-  has_and_belongs_to_many :projects
   has_many :time_estimates
   has_many :billable_hours
+  has_and_belongs_to_many :tasks
+  has_many :projects, -> { distinct }, through: :tasks
+
 
   def full_name
     first_name + " " + last_name

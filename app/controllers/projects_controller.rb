@@ -11,6 +11,7 @@ class ProjectsController < ApplicationController
   end
 
   def new
+    @project.tasks.build
   end
 
   def create
@@ -24,6 +25,7 @@ class ProjectsController < ApplicationController
   end
 
   def edit
+    @project.tasks.build
   end
 
   def update
@@ -42,7 +44,7 @@ class ProjectsController < ApplicationController
 
   private
     def project_params
-      params.require(:project).permit(:title, :description, user_ids: [])
+      params.require(:project).permit(:title, :description, :billing_type, :hours_budget, tasks_attributes: [:id, :title, :billable, user_ids: []])
     end
 end
 

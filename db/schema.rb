@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_14_160901) do
+ActiveRecord::Schema.define(version: 2020_05_15_215027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,8 @@ ActiveRecord::Schema.define(version: 2020_05_14_160901) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "company_id", null: false
+    t.integer "billing_type"
+    t.integer "hours_budget"
     t.index ["company_id"], name: "index_projects_on_company_id"
   end
 
@@ -52,16 +54,32 @@ ActiveRecord::Schema.define(version: 2020_05_14_160901) do
     t.index ["user_id"], name: "index_projects_users_on_user_id"
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.string "title"
+    t.boolean "billable"
+    t.bigint "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_tasks_on_project_id"
+  end
+
+  create_table "tasks_users", id: false, force: :cascade do |t|
+    t.bigint "task_id"
+    t.bigint "user_id"
+    t.index ["task_id"], name: "index_tasks_users_on_task_id"
+    t.index ["user_id"], name: "index_tasks_users_on_user_id"
+  end
+
   create_table "time_estimates", force: :cascade do |t|
     t.datetime "start_time"
     t.datetime "end_time"
     t.bigint "user_id", null: false
-    t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
     t.decimal "hours", precision: 10, scale: 3
-    t.index ["project_id"], name: "index_time_estimates_on_project_id"
-    t.index ["start_time", "user_id", "project_id"], name: "index_time_estimates_on_start_time_and_user_id_and_project_id", unique: true
+    t.bigint "task_id"
+    t.index ["start_time", "user_id", "task_id"], name: "index_time_estimates_on_start_time_and_user_id_and_task_id", unique: true
+    t.index ["task_id"], name: "index_time_estimates_on_task_id"
     t.index ["user_id"], name: "index_time_estimates_on_user_id"
   end
 
@@ -98,7 +116,7 @@ ActiveRecord::Schema.define(version: 2020_05_14_160901) do
   add_foreign_key "billable_hours", "projects"
   add_foreign_key "billable_hours", "users"
   add_foreign_key "projects", "companies"
-  add_foreign_key "time_estimates", "projects"
+  add_foreign_key "tasks", "projects"
   add_foreign_key "time_estimates", "users"
   add_foreign_key "users", "companies"
 end

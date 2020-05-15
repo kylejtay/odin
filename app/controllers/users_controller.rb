@@ -19,7 +19,6 @@ class UsersController < ApplicationController
   def create
     @user = User.new(resource_params)
     @user.company_id = current_user.company_id
-    @user.permissions = [{"team"=>"0", "projects"=>"0", "dashboard"=>"0", "forecasting"=>"0"}]
     if @user.invite!(current_user)
       redirect_to company_users_path
     else

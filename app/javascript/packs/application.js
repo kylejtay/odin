@@ -14,6 +14,7 @@ require("stylesheets/application.scss")
 import onmount from "onmount";
 import "../chosen.jquery.min";
 import "../projects";
+import "../dashboard";
 
 window.onmount = onmount;
 window.jQuery = $;
