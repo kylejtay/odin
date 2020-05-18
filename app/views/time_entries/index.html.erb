@@ -32,7 +32,7 @@
     </span>
   </div>
 </div>
-<%= form_with scope: :time_entries, url: time_entries_path, local: true  do |form| %>
+<%= form_with scope: :time_entries, url: time_entries_path, html: { class: 'time-form' }  do |form| %>
   <div class="flex flex-col mt-6">
     <div class="-my-2 py-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
       <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
@@ -67,7 +67,7 @@
                     <% @period.times do |i| %>
                       <td class="px-1 py-1 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500" width="50">
                         <div class="relative rounded-sm shadow-sm">
-                          <%= render partial: "time_entry", locals: { task_id: task.id, start_time: @start_time + i.days, offset: i, time_entries: user.time_entries.select{ |te| te.task_id == task.id }, user: user} %>
+                          <%= render partial: "time_entry", locals: { task: task, start_time: @start_time + i.days, offset: i, time_entries: user.time_entries.select{ |te| te.task_id == task.id }, user: user} %>
                         </div>
                       </td>
                     <% end %>
@@ -82,7 +82,6 @@
           <tfoot>
             <tr>
               <td class="px-4 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
-                <%= form.submit 'Save Hours', class: 'inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red active:bg-red-700 transition ease-in-out duration-150' %>
               </td>
               <% @period.times do |i| %>
                 <td class="px-2 py-3 border-b border-gray-200 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider text-center">0</td>

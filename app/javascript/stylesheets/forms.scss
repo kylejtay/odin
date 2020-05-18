@@ -10,3 +10,13 @@ input:disabled {
   background-color: #FFF;
   box-shadow: none;
 }
+
+input.billable.filled {
+  background-color: green !important;
+  color: white;
+}
+
+input.non-billable.filled {
+  background-color: red;
+  color: white;
+}

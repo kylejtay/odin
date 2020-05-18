@@ -15,6 +15,7 @@ import onmount from "onmount";
 import "../chosen.jquery.min";
 import "../projects";
 import "../dashboard";
+import "../time";
 
 window.onmount = onmount;
 window.jQuery = $;
