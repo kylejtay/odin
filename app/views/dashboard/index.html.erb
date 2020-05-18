@@ -40,7 +40,11 @@
     </div>
   </div>
 </div>
-<canvas class="billed-hourly-chart" width="400" height="400"></canvas>
+<canvas class="billed-hourly-chart" width="400" height="400" data-x-axis="<%= @x_axis.inspect %>"
+                                                             data-total-hours-worked="<%= @total_hours_worked.inspect %>"
+                                                             data-total-hours-forecasted="<%= @total_hours_forecasted.inspect %>"
+                                                             data-weekly-goal-hours="<%= @weekly_goal_hours.inspect %>"
+                                                             data-weekly-billed="<%= @weekly_billed.inspect %>"></canvas>
 <div class="max-w-7xl mx-auto mt-3">
   <div class="relative">
     <div class="absolute inset-0 h-1/2 bg-gray-50"></div>

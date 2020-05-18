@@ -8,22 +8,27 @@ onmount('.billed-hourly-chart', function() {
       data: {
           datasets: [{
               label: 'Billed Hours',
-              data: [10, 20, 30, 40],
+              data: JSON.parse(ctx.dataset.weeklyBilled),
               fill: 'origin',
-              backgroundColor: 'rgba(42, 157, 143,0.8)'
+              backgroundColor: 'rgba(94, 159, 75, .9)'
+          }, {
+              label: 'Total Hours Worked',
+              data: JSON.parse(ctx.dataset.totalHoursWorked),
+              fill: false,
+              borderColor: 'rgba(23, 95, 195,.9)'
           }, {
               label: 'Goal Hours',
-              data: [50, 50, 50, 50],
+              data: JSON.parse(ctx.dataset.weeklyGoalHours),
               fill: false,
-              borderColor: 'rgba(38, 70, 83, 1)'
+              borderColor: 'rgb(0, 255, 51, .9)'
           },
           {
               label: 'Forecast Hours',
-              data: [25, 50, 25, 50],
+              data: JSON.parse(ctx.dataset.totalHoursForecasted),
               fill: false,
-              borderColor: 'rgba(233, 196, 106, 1)'
+              borderColor: 'rgba(255, 139, 30, .9)'
           }],
-          labels: ['January', 'February', 'March', 'April']
+          labels: JSON.parse(ctx.dataset.xAxis)
       }
   });
 });

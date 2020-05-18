@@ -59,21 +59,23 @@
                 </td>
               </tr>
               <% user.projects.each do |project| %>
-                <tr>
-                  <td class="px-4 py-2 whitespace-no-wrap border-b border-gray-200 text-sm text-md text-gray-900 truncate">
-                    <%= project.title %>
-                  </td>
-                  <% @period.times do |i| %>
-                    <td class="px-1 py-1 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500" width="50">
-                      <div class="relative rounded-sm shadow-sm">
-                        <%= render partial: "time_entry", locals: { project_id: project.id, start_time: @start_time + i.days, offset: i, time_entries: user.time_entries.select{ |bh| bh.project_id == project.id }, user: user} %>
-                      </div>
+                <% project.tasks.each do |task| %>
+                  <tr>
+                    <td class="px-4 py-2 whitespace-no-wrap border-b border-gray-200 text-sm text-md text-gray-900 truncate">
+                      <%= project.title %> (<%= task.title %>)
                     </td>
-                  <% end %>
-                  <td class="px-4 py-2 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500 text-right" width="100">
-                    0
-                  </td>
-                </tr>
+                    <% @period.times do |i| %>
+                      <td class="px-1 py-1 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500" width="50">
+                        <div class="relative rounded-sm shadow-sm">
+                          <%= render partial: "time_entry", locals: { task_id: task.id, start_time: @start_time + i.days, offset: i, time_entries: user.time_entries.select{ |te| te.task_id == task.id }, user: user} %>
+                        </div>
+                      </td>
+                    <% end %>
+                    <td class="px-4 py-2 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500 text-right" width="100">
+                      0
+                    </td>
+                  </tr>
+                <% end %>
               <% end %>
             <% end %>
           </tbody>

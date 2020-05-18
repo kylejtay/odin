@@ -11,9 +11,9 @@ class TimeEstimatesController < ApplicationController
     @period = 7
     @period = params['period'].to_i if params['period'].present?
     if can? :read, :other_forecasts
-      @users = current_user.company.users.includes(:projects, :tasks, :time_estimates)
+      @users = current_user.company.users.includes(:projects, :tasks, :time_estimates).order('first_name ASC')
     else
-      @users = User.where(id: current_user.id).includes(:projects, :tasks, :time_estimates)
+      @users = User.where(id: current_user.id).includes(:projects, :tasks, :time_estimates).order('first_name ASC')
     end
   end
 

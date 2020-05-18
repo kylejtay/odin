@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_15_221835) do
+ActiveRecord::Schema.define(version: 2020_05_15_223921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,13 +60,13 @@ ActiveRecord::Schema.define(version: 2020_05_15_221835) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.bigint "user_id", null: false
-    t.bigint "project_id", null: false
     t.decimal "hours", precision: 10, scale: 3
     t.decimal "decimal", precision: 10, scale: 3
     t.datetime "created_at", precision: 6, default: -> { "now()" }, null: false
     t.datetime "updated_at", precision: 6, default: -> { "now()" }, null: false
-    t.index ["project_id"], name: "index_time_entries_on_project_id"
-    t.index ["start_time", "user_id", "project_id"], name: "index_time_entries_on_start_time_and_user_id_and_project_id", unique: true
+    t.bigint "task_id"
+    t.index ["start_time", "user_id", "task_id"], name: "index_time_entries_on_start_time_and_user_id_and_task_id", unique: true
+    t.index ["task_id"], name: "index_time_entries_on_task_id"
     t.index ["user_id"], name: "index_time_entries_on_user_id"
   end
 
@@ -115,7 +115,6 @@ ActiveRecord::Schema.define(version: 2020_05_15_221835) do
 
   add_foreign_key "projects", "companies"
   add_foreign_key "tasks", "projects"
-  add_foreign_key "time_entries", "projects"
   add_foreign_key "time_entries", "users"
   add_foreign_key "time_estimates", "users"
   add_foreign_key "users", "companies"
