@@ -65,7 +65,7 @@
                       <%= project.title %> (<%= task.title %>)
                     </td>
                     <% @period.times do |i| %>
-                      <td class="px-1 py-1 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500" width="50">
+                      <td class="px-1 py-1 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500 <%= 'weekend' if ((@start_time + i.days).saturday? || (@start_time + i.days).sunday?) %>" width="50">
                         <div class="relative rounded-sm shadow-sm">
                           <%= render partial: "time_entry", locals: { task: task, start_time: @start_time + i.days, offset: i, time_entries: user.time_entries.select{ |te| te.task_id == task.id }, user: user} %>
                         </div>
