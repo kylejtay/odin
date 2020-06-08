@@ -42,6 +42,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
+    @user.destroy
+
+    redirect_to company_users_path
   end
 
   private
