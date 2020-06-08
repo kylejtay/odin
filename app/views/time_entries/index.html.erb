@@ -61,7 +61,7 @@
               <% user.projects.each do |project| %>
                 <% project.tasks.each do |task| %>
                   <tr>
-                    <td class="px-4 py-2 whitespace-no-wrap border-b border-gray-200 text-sm text-md text-gray-900 truncate">
+                    <td class="px-4 py-2 whitespace-no-wrap border-b border-gray-200 text-sm text-md text-gray-900 truncate" width="100">
                       <%= project.title %> (<%= task.title %>)
                     </td>
                     <% @period.times do |i| %>
