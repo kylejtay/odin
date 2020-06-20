@@ -28,10 +28,11 @@ class TimeEntriesController < ApplicationController
           datetime = Date.parse(date[0])
           date[1].each do |hours|
             length = hours[1][0].to_f
-            if length > 0
-              TimeEntry.upsert(
-                { start_time: datetime, end_time: datetime + length.hours, hours: length, user_id: user_id, task_id: task_id },
-              unique_by: %i[ start_time user_id task_id ])
+            time_entry = TimeEntry.where(start_time: datetime, user_id: user_id, task_id: task_id).first
+            if time_entry.present?
+              time_entry.update(start_time: datetime, end_time: datetime + length.hours, hours: length, user_id: user_id, task_id: task_id)
+            elsif length > 0
+              TimeEntry.create(start_time: datetime, end_time: datetime + length.hours, hours: length, user_id: user_id, task_id: task_id)
             end
           end
         end
